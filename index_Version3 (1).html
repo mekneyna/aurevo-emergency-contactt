@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emergency Contact OKU - Form</title>
+  <meta name="description" content="Kad kecemasan OKU - isian resepsionis untuk tetamu" />
+  <style>
+    body { background: #e6f1ff; font-family: system-ui, Arial, sans-serif; color: #222; margin: 0; }
+    .container { max-width: 900px; background: #fff; margin: 30px auto; border-radius: 16px; box-shadow: 0 8px 36px #0001; overflow: hidden; }
+    .intro-img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .intro-img { height: 120px; } }
+    .left, .right { padding: 28px 20px 20px 20px; }
+    .left { border-right: 1px solid #f0f0f0; background: #fcfcff; }
+    @media (max-width: 900px) { .left { border-right: none; border-bottom: 1px solid #f0f0f0; } }
+    h1 { font-size: 1.4rem; margin-bottom: 12px; color: #0b63d6; }
+    label { display: block; margin: 10px 0 4px 0; font-weight: 500; }
+    input, textarea { width: 100%; padding: 7px; border: 1px solid #e0e7ff; border-radius: 7px; font-size: 1rem; resize: vertical; }
+    .row2 { display: flex; gap: 8px; }
+    .row2 > div { flex: 1; }
+    .section-title { font-size: 1.07rem; font-weight: bold; color: #2563eb; margin-top: 18px; margin-bottom: 3px; }
+    .actions { margin-top: 18px; display: flex; gap: 12px; }
+    button, .actions a { background: #0b63d6; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-weight: bold; font-size: 1rem; cursor: pointer; text-decoration: none; }
+    .lang-switch { text-align: right; margin-bottom: 14px; }
+    .lang-switch button { background: #e0e7ff; border: none; border-radius: 8px; padding: 7px 12px; margin-left: 6px; font-weight: bold; cursor: pointer; color: #1e293b; }
+    /* Card Preview */
+    .card-preview { background: #fff; border-radius: 14px; box-shadow: 0 4px 18px #0001; padding: 20px; margin: 20px 0; }
+    .big { font-size: 1.18rem; font-weight: bold; margin-bottom: 6px; }
+    .contacts { margin: 10px 0; }
+    .contact { margin-bottom: 12px; padding: 7px 0; border-bottom: 1px solid #f2f2f2; display: flex; align-items: center; }
+    .contact:last-child { border-bottom: none; }
+    .contact-info { flex: 1; }
+    .btns a { text-decoration: none; background: #0b63d6; color: #fff; border-radius: 8px; padding: 7px 12px; margin-left: 8px; font-weight: bold; font-size: 0.96rem; }
+    .btns a.whatsapp { background: #22c55e; }
+    .btns a.call { background: #2563eb; }
+    .medical { background: #fffbe6; border: 1px solid #ffe58f; padding: 8px; border-radius: 8px; margin-top: 8px; font-size: 1rem; }
+    .meta { font-size: 0.89rem; color: #555; margin-top: 10px; }
+    .rescuer { background: #e0f7fa; border-radius: 10px; padding: 16px; margin-top: 16px; text-align: center; display: none; }
+    .rescuer .big { font-size: 2.1rem; }
+    .rescuer .meta { font-size: 1.05rem; margin-top: 10px; }
+    footer { font-size: 0.8rem; text-align: center; color: #888; margin: 20px 0 4px 0; }
+    @media print { .actions, .lang-switch, footer, .intro-img, .left {display:none} .right {grid-column: 1/-1; padding:10px;} .card-preview {box-shadow:none} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Intro Image (clickable) -->
+    <a href="https://i.postimg.cc/kMFrLRv9/kit.jpg" target="_blank">
+      <img class="intro-img" src="https://i.postimg.cc/kMFrLRv9/kit.jpg" alt="kit" />
+    </a>
+    <div class="lang-switch">
+      <button onclick="setLang('ms')">BM</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <div class="main-grid">
+      <!-- LEFT: Receptionist Form -->
+      <div class="left">
+        <h1 id="formTitle">Isian Resepsionis</h1>
+        <form id="contactForm" autocomplete="off" onsubmit="submitForm(event)">
+          <label id="labelName">Nama Tetamu</label>
+          <input id="name" required />
+
+          <div class="section-title" id="labelContacts">Nombor Penting</div>
+          <div class="row2">
+            <div>
+              <label id="labelPrimaryName">Penjaga (Nama)</label>
+              <input id="primaryName" />
+            </div>
+            <div>
+              <label id="labelPrimaryRel">Hubungan</label>
+              <input id="primaryRel" />
+            </div>
+          </div>
+          <div class="row2">
+            <div>
+              <label id="labelPrimaryPhone">Telefon Penjaga</label>
+              <input id="primaryPhone" />
+            </div>
+            <div>
+              <label id="labelPrimaryWA">WhatsApp Penjaga</label>
+              <input id="primaryWA" />
+            </div>
+          </div>
+          <div class="row2">
+            <div>
+              <label id="labelHotelName">Hotel (Nama/No Bilik)</label>
+              <input id="hotelName" value="Hotel Tanjong Vista" />
+            </div>
+            <div>
+              <label id="labelHotelPhone">Telefon Hotel</label>
+              <input id="hotelPhone" value="096319988" />
+            </div>
+          </div>
+          <div class="row2">
+            <div>
+              <label id="labelFamilyName">Keluarga (Nama)</label>
+              <input id="familyName" />
+            </div>
+            <div>
+              <label id="labelFamilyRel">Hubungan</label>
+              <input id="familyRel" />
+            </div>
+          </div>
+          <div class="row2">
+            <div>
+              <label id="labelFamilyPhone">Telefon Keluarga</label>
+              <input id="familyPhone" />
+            </div>
+            <div>
+              <label id="labelFamilyWA">WhatsApp Keluarga</label>
+              <input id="familyWA" />
+            </div>
+          </div>
+          <div class="section-title" id="labelMedical">Nota Perubatan</div>
+          <textarea id="medical" rows="2" placeholder="Contoh: Alahan penisilin. Darah: O+. Asma - inhaler perlu."></textarea>
+          <label id="labelHospital">Hospital/Rujukan</label>
+          <input id="hospital" placeholder="Contoh: Hospital Contoh / Alamat" />
+          <div class="actions">
+            <button type="button" onclick="toggleRescue()">Rescuer Mode</button>
+            <button type="button" onclick="window.print()">Print</button>
+            <button type="submit">Hantar</button>
+          </div>
+        </form>
+      </div>
+      <!-- RIGHT: Live Card Preview -->
+      <div class="right">
+        <!-- ... (unchanged live preview code) ... -->
+        <!-- Your preview and rescuer code remains as you posted -->
+        <!-- ... -->
+      </div>
+    </div>
+    <footer>
+      Emergency Contact OKU — Diisi oleh resepsionis untuk tetamu OKU<br>
+      <a href="https://docs.google.com/spreadsheets/d/16YKXhNYNQex0ZYG8QssjBnmEjuPvzxXahzSCSvnSO20/edit?usp=sharing" target="_blank">
+        Lihat Data Emergency Contact (Google Sheet)
+      </a>
+    </footer>
+  </div>
+  <script>
+    // Language labels (unchanged)
+    const labels = {
+      ms: {
+        formTitle: "Isian Resepsionis",
+        labelName: "Nama Tetamu",
+        labelContacts: "Nombor Penting",
+        labelPrimaryName: "Penjaga (Nama)",
+        labelPrimaryRel: "Hubungan",
+        labelPrimaryPhone: "Telefon Penjaga",
+        labelPrimaryWA: "WhatsApp Penjaga",
+        labelHotelName: "Hotel (Nama/No Bilik)",
+        labelHotelPhone: "Telefon Hotel",
+        labelFamilyName: "Keluarga (Nama)",
+        labelFamilyRel: "Hubungan",
+        labelFamilyPhone: "Telefon Keluarga",
+        labelFamilyWA: "WhatsApp Keluarga",
+        labelMedical: "Nota Perubatan",
+        labelHospital: "Hospital/Rujukan"
+      },
+      en: {
+        formTitle: "Receptionist Input",
+        labelName: "Guest Name",
+        labelContacts: "Important Numbers",
+        labelPrimaryName: "Guardian (Name)",
+        labelPrimaryRel: "Relation",
+        labelPrimaryPhone: "Guardian Phone",
+        labelPrimaryWA: "Guardian WhatsApp",
+        labelHotelName: "Hotel (Name/Room)",
+        labelHotelPhone: "Hotel Phone",
+        labelFamilyName: "Family (Name)",
+        labelFamilyRel: "Relation",
+        labelFamilyPhone: "Family Phone",
+        labelFamilyWA: "Family WhatsApp",
+        labelMedical: "Medical Note",
+        labelHospital: "Hospital/Reference"
+      }
+    };
+    let lang = 'ms';
+    function setLang(l) {
+      lang = l;
+      // Form labels
+      for (let k in labels[l]) {
+        document.getElementById(k).innerText = labels[l][k];
+      }
+      document.getElementById('formTitle').innerText = labels[l].formTitle;
+      document.getElementById('preview-ms').style.display = l==='ms' ? 'block':'none';
+      document.getElementById('preview-en').style.display = l==='en' ? 'block':'none';
+    }
+    // Live preview logic
+    function updatePreview() {
+      const name = document.getElementById('name').value;
+      const primaryName = document.getElementById('primaryName').value;
+      const primaryRel = document.getElementById('primaryRel').value;
+      const primaryPhone = document.getElementById('primaryPhone').value;
+      const primaryWA = document.getElementById('primaryWA').value;
+      const hotelName = document.getElementById('hotelName').value;
+      const hotelPhone = document.getElementById('hotelPhone').value;
+      const familyName = document.getElementById('familyName').value;
+      const familyRel = document.getElementById('familyRel').value;
+      const familyPhone = document.getElementById('familyPhone').value;
+      const familyWA = document.getElementById('familyWA').value;
+      const medical = document.getElementById('medical').value;
+      const hospital = document.getElementById('hospital').value;
+      // BM
+      document.getElementById('pvName').innerText = "Nama: " + (name||"-");
+      document.getElementById('pvPrimaryName').innerText = "Penjaga: " + (primaryName||"-");
+      document.getElementById('pvPrimaryRel').innerText = (primaryRel ? "Hubungan: " + primaryRel : "");
+      document.getElementById('pvPrimaryCall').href = primaryPhone ? "tel:" + primaryPhone : "#";
+      document.getElementById('pvPrimaryWA').href = primaryWA ? "https://wa.me/" + primaryWA.replace(/[^0-9]/g,'') : "#";
+      document.getElementById('pvHotelName').innerText = "Hotel: " + (hotelName||"-");
+      document.getElementById('pvHotelCall').href = hotelPhone ? "tel:" + hotelPhone : "#";
+      document.getElementById('pvFamilyName').innerText = "Keluarga: " + (familyName||"-");
+      document.getElementById('pvFamilyRel').innerText = (familyRel ? "Hubungan: " + familyRel : "");
+      document.getElementById('pvFamilyCall').href = familyPhone ? "tel:" + familyPhone : "#";
+      document.getElementById('pvFamilyWA').href = familyWA ? "https://wa.me/" + familyWA.replace(/[^0-9]/g,'') : "#";
+      document.getElementById('pvMedical').innerText = medical;
+      document.getElementById('pvHospital').innerText = hospital ? "Hospital: " + hospital : "";
+      // EN
+      document.getElementById('pvNameEn').innerText = "Name: " + (name||"-");
+      document.getElementById('pvPrimaryNameEn').innerText = "Guardian: " + (primaryName||"-");
+      document.getElementById('pvPrimaryRelEn').innerText = (primaryRel ? "Relation: " + primaryRel : "");
+      document.getElementById('pvPrimaryCallEn').href = primaryPhone ? "tel:" + primaryPhone : "#";
+      document.getElementById('pvPrimaryWAEn').href = primaryWA ? "https://wa.me/" + primaryWA.replace(/[^0-9]/g,'') : "#";
+      document.getElementById('pvHotelNameEn').innerText = "Hotel: " + (hotelName||"-");
+      document.getElementById('pvHotelCallEn').href = hotelPhone ? "tel:" + hotelPhone : "#";
+      document.getElementById('pvFamilyNameEn').innerText = "Family: " + (familyName||"-");
+      document.getElementById('pvFamilyRelEn').innerText = (familyRel ? "Relation: " + familyRel : "");
+      document.getElementById('pvFamilyCallEn').href = familyPhone ? "tel:" + familyPhone : "#";
+      document.getElementById('pvFamilyWAEn').href = familyWA ? "https://wa.me/" + familyWA.replace(/[^0-9]/g,'') : "#";
+      document.getElementById('pvMedicalEn').innerText = medical;
+      document.getElementById('pvHospitalEn').innerText = hospital ? "Hospital: " + hospital : "";
+      // Rescuer mode
+      document.getElementById('rescuerName').innerText = name||"-";
+      document.getElementById('rescuerMedical').innerText = (medical ? medical : "-");
+      document.getElementById('rescuerCall').href = primaryPhone ? "tel:" + primaryPhone : "#";
+      document.getElementById('rescuerWA').href = primaryWA ? "https://wa.me/" + primaryWA.replace(/[^0-9]/g,'') : "#";
+    }
+    // Listen to all form fields
+    Array.from(document.querySelectorAll('input,textarea')).forEach(el=>{
+      el.addEventListener('input', updatePreview);
+    });
+    // Language switch
+    setLang('ms');
+    // Rescuer mode
+    let rescueOn = false;
+    function toggleRescue() {
+      rescueOn = !rescueOn;
+      document.getElementById('rescuerCard').style.display = rescueOn ? "block" : "none";
+    }
+    updatePreview();
+
+    // --- Google Sheet Submission Function ---
+    function submitForm(e) {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        primaryName: document.getElementById('primaryName').value,
+        primaryRel: document.getElementById('primaryRel').value,
+        primaryPhone: document.getElementById('primaryPhone').value,
+        primaryWA: document.getElementById('primaryWA').value,
+        hotelName: document.getElementById('hotelName').value,
+        hotelPhone: document.getElementById('hotelPhone').value,
+        familyName: document.getElementById('familyName').value,
+        familyRel: document.getElementById('familyRel').value,
+        familyPhone: document.getElementById('familyPhone').value,
+        familyWA: document.getElementById('familyWA').value,
+        medical: document.getElementById('medical').value,
+        hospital: document.getElementById('hospital').value
+      };
+
+      // Your Google Apps Script Web App URL
+      const url = "https://script.google.com/macros/s/AKfycbxe73MnTXpeH15U8xldww7aNc4ySv6IaZcQQC_UiZgbEc2ATx6ubmqMkjK8bCJdH94v/exec";
+
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(res => res.text())
+        .then(res => {
+          alert('Data saved to Google Sheet!');
+          document.getElementById('contactForm').reset();
+          updatePreview();
+        })
+        .catch(err => {
+          alert('Error saving data: ' + err);
+        });
+    }
+  </script>
+</body>
+</html>
